@@ -1,0 +1,23 @@
+.tabla-general{   
+	border-collapse:collapse;
+	background-color: #b9ccff;
+}
+ 
+.tabla-general-cabecera{
+	text-align:center;
+	background:none repeat scroll 0 0 #eb5256;
+	border-bottom:1px solid #db2226;
+	padding:16px;
+}
+ 
+.tabla-general-impar{
+	text-align:center;
+	background:none repeat scroll 0 0 #b9ccff;
+	border-top:1px solid #800040;
+}
+ 
+.tabla-general-par{
+	text-align:center;
+	background:none repeat scroll 0 0 #70b5cb;
+	border-top:1px solid #800040;
+}
