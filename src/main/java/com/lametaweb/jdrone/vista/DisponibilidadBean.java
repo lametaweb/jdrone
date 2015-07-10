@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.enterprise.context.RequestScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -28,10 +29,12 @@ public class DisponibilidadBean {
 	}
 	
 	public void listaEstadoDronesPorFecha(){
-
-		Date fechaAjustada = this.fecha!=null?new Date(this.fecha.getTime() + 
+		
+		if(!FacesContext.getCurrentInstance().isPostback()) return;
+			
+		Date fechaAjustada = new Date(this.fecha.getTime() + 
 				this.horas * 60 * 60 * 1000 +
-				this.minutos * 60 * 1000):null;
+				this.minutos * 60 * 1000);
 		
 		this.drones =  droneFacade.obtenEstadoDronesPorFechaNamed(fechaAjustada);
 	}	
