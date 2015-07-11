@@ -1,7 +1,11 @@
 package com.lametaweb.jdrone.vista;
 
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.SimpleTimeZone;
+import java.util.TimeZone;
 
 import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
@@ -16,8 +20,7 @@ import com.lametaweb.jdrone.persistencia.Drone;
 public class DisponibilidadBean {
 
 	private Date fecha;
-	private int horas;
-	private int minutos;
+	private Date hora;
 	
 	@Inject
 	private DroneFacade droneFacade;
@@ -31,10 +34,18 @@ public class DisponibilidadBean {
 	public void listaEstadoDronesPorFecha(){
 		
 		if(!FacesContext.getCurrentInstance().isPostback()) return;
-			
-		Date fechaAjustada = new Date(this.fecha.getTime() + 
-				this.horas * 60 * 60 * 1000 +
-				this.minutos * 60 * 1000);
+		
+		TimeZone timeZone = new SimpleTimeZone(0,"GMT+02");
+		Calendar calendar = new GregorianCalendar(timeZone);
+		calendar.setTime(hora);
+		int horas = calendar.get(Calendar.HOUR_OF_DAY);
+		int minutos = calendar.get(Calendar.MINUTE);
+		
+		calendar.setTime(this.fecha);
+		calendar.add(Calendar.HOUR, horas-2);
+		calendar.add(Calendar.MINUTE, minutos);
+	
+		Date fechaAjustada = calendar.getTime();
 		
 		this.drones =  droneFacade.obtenEstadoDronesPorFechaNamed(fechaAjustada);
 	}	
@@ -47,20 +58,12 @@ public class DisponibilidadBean {
 		this.fecha = fecha;
 	}
 
-	public int getHoras() {
-		return horas;
+	public Date getHora() {
+		return hora;
 	}
 
-	public void setHoras(int horas) {
-		this.horas = horas;
-	}
-
-	public int getMinutos() {
-		return minutos;
-	}
-
-	public void setMinutos(int minutos) {
-		this.minutos = minutos;
+	public void setHora(Date hora) {
+		this.hora = hora;
 	}
 
 	public List<Drone> getDrones() {

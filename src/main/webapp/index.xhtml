@@ -31,21 +31,13 @@
 		<h:outputLabel value="Fecha (dd-mm-aaaa)" for="fecha" />&nbsp;
 		<h:inputText id="fecha" value="#{disponibilidadBean.fecha}"
 			required="true">
-			<f:convertDateTime pattern="dd-MM-yyyy" timeZone="GMT+02" />
+			<f:convertDateTime pattern="dd-MM-yyyy" />
 		</h:inputText>
 		<br />
-		<h:outputLabel value="Hora (0-24)" for="horas" />&nbsp;
-		<h:inputText id="horas" value="#{disponibilidadBean.horas}"
+		<h:outputLabel value="Hora (0-23:0-59)" for="hora" />&nbsp;
+		<h:inputText id="hora" value="#{disponibilidadBean.hora}"
 			required="true">
-			<f:validateLength maximum="2" />
-			<f:validateLongRange minimum="0" maximum="24" />
-		</h:inputText>
-		<br />
-		<h:outputLabel value="Minutos (0-60)" for="minutos" />&nbsp;
-		<h:inputText id="minutos" value="#{disponibilidadBean.minutos}"
-			required="true">
-			<f:validateLength maximum="2" />
-			<f:validateLongRange minimum="0" maximum="60" />
+			<f:convertDateTime pattern="HH:mm" />
 		</h:inputText>
 		<br />
 		<br />
