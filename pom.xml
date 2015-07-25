@@ -49,12 +49,35 @@
 				<executions>
 					<execution>
 						<id>undeploy</id>
-						<phase>package</phase>
+						<phase>install</phase>
 						<goals>
 							<goal>undeploy</goal>
 						</goals>
 					</execution>
 
+					<execution>
+						<id>deploy</id>
+						<phase>install</phase>
+						<goals>
+							<goal>deploy</goal>
+						</goals>
+					</execution>
+
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+	
+<profiles>
+<profile>
+	<id>despliegue-recursos</id>
+	<build>
+		<plugins>
+			<plugin>
+                <groupId>org.wildfly.plugins</groupId>
+                <artifactId>wildfly-maven-plugin</artifactId>
+                <version>${version.wildfly.maven.plugin}</version>			
+				<executions>
 					<execution>
 						<id>deploy-driver</id>
 						<phase>package</phase>
@@ -88,28 +111,18 @@
 									<driver-name>derby.jar</driver-name>
 									<pool-name>DerbyDS</pool-name>									
 									<use-ccm>false</use-ccm>
-									<force>true</force>
+									<force>false</force>
 								</properties>
 							</resource>
 							</resources>
 						</configuration>
 					</execution>
- 
-					<execution>
-						<id>deploy</id>
-						<phase>install</phase>
-						<goals>
-							<goal>deploy</goal>
-						</goals>
-					</execution>
-
 				</executions>
 			</plugin>
 		</plugins>
 	</build>
-
-
-
+</profile>	
+</profiles>
 
     <dependencyManagement>
         <dependencies>
