@@ -10,7 +10,11 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<version.jboss.bom.eap>1.0.0.CR1</version.jboss.bom.eap>
+        <!-- Define the version of the JBoss BOMs we want to import to specify 
+            tested stacks. -->
+        <version.jboss.bom>9.0.0.Final</version.jboss.bom>		
+        <!-- JBoss dependency versions -->
+        <version.wildfly.maven.plugin>1.0.2.Final</version.wildfly.maven.plugin>		
 	</properties>
 
 	<build>
@@ -38,14 +42,14 @@
 			</plugin>
 
 			<plugin>
-				<groupId>org.jboss.as.plugins</groupId>
-				<artifactId>jboss-as-maven-plugin</artifactId>
-				<version>7.6.Final</version>
+                <groupId>org.wildfly.plugins</groupId>
+                <artifactId>wildfly-maven-plugin</artifactId>
+                <version>${version.wildfly.maven.plugin}</version>
 
 				<executions>
 					<execution>
 						<id>undeploy</id>
-						<phase>install</phase>
+						<phase>package</phase>
 						<goals>
 							<goal>undeploy</goal>
 						</goals>
@@ -53,7 +57,7 @@
 
 					<execution>
 						<id>deploy-driver</id>
-						<phase>install</phase>
+						<phase>package</phase>
 						<configuration>
 							<groupId>org.apache.derby</groupId>
 							<artifactId>derby</artifactId>
@@ -62,34 +66,35 @@
 						<goals>
 							<goal>deploy-artifact</goal>
 						</goals>
-					</execution>
+					</execution>				
+
 					<execution>
-						<id>add-datasource</id>
-						<phase>install</phase>
+						<id>add-datasource-derby</id>
+						<phase>package</phase>
+						<goals>
+							<goal>add-resource</goal>
+						</goals>						
 						<configuration>
-							<address>subsystem=datasources,data-source=DerbyDS</address>
+							<address>subsystem=datasources,data-source=java:jboss/datasources/DerbyDS</address>
+							<resources>
 							<resource>
-								<enableResource>true</enableResource>
 								<properties>
-									<connection-url>jdbc:derby:c:\BD\drones;create=true</connection-url>
-									<driver-class>org.apache.derby.jdbc.EmbeddedDriver</driver-class>
 									<jndi-name>java:jboss/datasources/DerbyDS</jndi-name>
 									<enabled>true</enabled>
-									<enable>true</enable>
-									<pool-name>DerbyDS</pool-name>
+									<connection-url>jdbc:derby:c:\BD\drones;create=true</connection-url>
+									<driver-class>org.apache.derby.jdbc.EmbeddedDriver</driver-class>
 									<user-name>root</user-name>
 									<password>root</password>
 									<driver-name>derby.jar</driver-name>
+									<pool-name>DerbyDS</pool-name>									
 									<use-ccm>false</use-ccm>
 									<force>true</force>
 								</properties>
 							</resource>
+							</resources>
 						</configuration>
-						<goals>
-							<goal>add-resource</goal>
-						</goals>
 					</execution>
-
+ 
 					<execution>
 						<id>deploy</id>
 						<phase>install</phase>
@@ -105,41 +110,46 @@
 
 
 
-	<dependencyManagement>
-		<dependencies>
-			<!-- Define the version of JBoss' Java EE 6 APIs we want to import. Any 
-				dependencies from org.jboss.spec will have their version defined by this 
-				BOM -->
-			<!-- JBoss distributes a complete set of Java EE 6 APIs including a Bill 
-				of Materials (BOM). A BOM specifies the versions of a "stack" (or a collection) 
-				of artifacts. We use this here so that we always get the correct versions 
-				of artifacts. Here we use the jboss-javaee-6.0-with-tools stack (you can 
-				read this as the JBoss stack of the Java EE 6 APIs, with some extras tools 
-				for your project, such as Arquillian for testing) and the jboss-javaee-6.0-with-hibernate 
-				stack you can read this as the JBoss stack of the Java EE 6 APIs, with extras 
-				from the Hibernate family of projects) -->
-			<dependency>
-				<groupId>org.jboss.bom</groupId>
-				<artifactId>jboss-javaee-6.0-with-tools</artifactId>
-				<version>${version.jboss.bom.eap}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- JBoss distributes a complete set of Java EE 7 APIs including a Bill
+                of Materials (BOM). A BOM specifies the versions of a "stack" (or a collection) 
+                of artifacts. We use this here so that we always get the correct versions 
+                of artifacts. Here we use the jboss-javaee-7.0-with-tools stack (you can
+                read this as the JBoss stack of the Java EE 7 APIs, with some extras tools
+                for your project, such as Arquillian for testing) and the jboss-javaee-7.0-with-hibernate
+                stack you can read this as the JBoss stack of the Java EE 7 APIs, with extras
+                from the Hibernate family of projects) -->
+            <dependency>
+                <groupId>org.wildfly.bom</groupId>
+                <artifactId>jboss-javaee-7.0-wildfly-with-tools</artifactId>
+                <version>${version.jboss.bom}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
 	<dependencies>
+		<dependency>  
+		    <groupId>org.primefaces</groupId>  
+		    <artifactId>primefaces</artifactId>  
+		    <version>5.2</version>  
+		</dependency>
+		  	
 		<dependency>
 			<groupId>org.apache.derby</groupId>
 			<artifactId>derby</artifactId>
 			<version>10.11.1.1</version>
 			<scope>runtime</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.jboss.spec.javax.faces</groupId>
-			<artifactId>jboss-jsf-api_2.1_spec</artifactId>
-			<scope>provided</scope>
-		</dependency>
+		
+        <dependency>
+            <groupId>org.jboss.spec.javax.faces</groupId>
+            <artifactId>jboss-jsf-api_2.2_spec</artifactId>
+            <scope>provided</scope>
+        </dependency>		
 
 		<dependency>
 			<groupId>javax.enterprise</groupId>
@@ -147,36 +157,43 @@
 			<scope>provided</scope>
 		</dependency>
 
-		<dependency>
-			<groupId>org.jboss.spec.javax.ejb</groupId>
-			<artifactId>jboss-ejb-api_3.1_spec</artifactId>
-			<scope>provided</scope>
-		</dependency>
+        <dependency>
+            <groupId>org.jboss.spec.javax.ejb</groupId>
+            <artifactId>jboss-ejb-api_3.2_spec</artifactId>
+            <scope>provided</scope>
+        </dependency>		
 
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-validator</artifactId>
-			<version>5.1.3.Final</version>
-		</dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <scope>provided</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-api</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
 
-		<dependency>
-			<groupId>org.hibernate.javax.persistence</groupId>
-			<artifactId>hibernate-jpa-2.0-api</artifactId>
-			<scope>provided</scope>
-		</dependency>
+        <dependency>
+            <groupId>org.hibernate.javax.persistence</groupId>
+            <artifactId>hibernate-jpa-2.1-api</artifactId>
+            <scope>provided</scope>
+        </dependency>		
 
-		<dependency>
-			<groupId>org.jboss.spec.javax.annotation</groupId>
-			<artifactId>jboss-annotations-api_1.1_spec</artifactId>
-			<scope>provided</scope>
-		</dependency>
+        <dependency>
+            <groupId>org.jboss.spec.javax.annotation</groupId>
+            <artifactId>jboss-annotations-api_1.2_spec</artifactId>
+            <scope>provided</scope>
+        </dependency>
 
+		<!--
 		<dependency>
 			<groupId>javax.validation</groupId>
 			<artifactId>validation-api</artifactId>
 			<scope>provided</scope>
 		</dependency>
-
+		-->
 	</dependencies>
 
 </project>
