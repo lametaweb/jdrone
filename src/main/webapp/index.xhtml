@@ -1,17 +1,15 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core">
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
 <f:view>
 <h:head>
 	<h:outputStylesheet library="css" name="estilo.css" />
 </h:head>
 
 <f:metadata>
-	<f:event
-		listener="#{disponibilidadBean.listaEstadoDronesPorFecha()}"
-		type="preRenderView" />
+	<f:viewAction action="#{disponibilidadBean.listaEstadoDronesPorFecha()}" onPostback="true"></f:viewAction>
 </f:metadata>
 
 <h:body> 
@@ -28,13 +26,13 @@
 		<h:outputText
 			value="Introduce la fecha y la hora en el formato indicado:" />
 		<br />
-		<h:outputLabel value="Fecha (dd-mm-aaaa)" for="fecha" />&nbsp;
+		<h:outputLabel value="Fecha (dd-mm-aaaa)" for="fecha" />&#160;
 		<h:inputText id="fecha" value="#{disponibilidadBean.fecha}"
 			required="true">
 			<f:convertDateTime pattern="dd-MM-yyyy" />
 		</h:inputText>
 		<br />
-		<h:outputLabel value="Hora (0-23:0-59)" for="hora" />&nbsp;
+		<h:outputLabel value="Hora (0-23:0-59)" for="hora" />&#160;
 		<h:inputText id="hora" value="#{disponibilidadBean.hora}"
 			required="true">
 			<f:convertDateTime pattern="HH:mm" />
