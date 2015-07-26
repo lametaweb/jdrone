@@ -1,0 +1,32 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+				
+    <f:facet name="last">
+		<!-- estilo -->
+    </f:facet>     
+	<div id="caja-logo" style="display:inline-block;">
+    <h:link outcome="/index.xhtml">
+        <h:graphicImage id="imagen-logo" value="/resources/imagenes/jdrone.png"
+        				style="position: relative;"
+                        alt="One point management"/>
+    </h:link>
+    </div>   
+
+	<script>
+		$('#imagen-logo').hover(function(){
+			$(this).animate(
+					{
+						left: '+=10px'
+						}, 200
+					);
+			$(this).animate(
+					{
+						left: '-=10px'
+						}, 200
+					);							
+		});
+	</script>     
+
+</ui:composition>
