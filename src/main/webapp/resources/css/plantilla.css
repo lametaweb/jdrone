@@ -1,0 +1,142 @@
+#logo {
+    position: relative;
+    background-color: #cde2ff;
+    color: white;
+    padding: 5px;
+    margin: 0px 0px 0px 0px;
+}
+#menu-linea1 {
+    position: relative;
+    background-color: #045491;
+    color: white;
+    padding: 5px;
+    margin: 0px 0px 0px 0px;
+}
+#menu-linea1-izq {
+    float:left; 
+    width: 50%;
+    height:20px;
+}
+#menu-linea1-der {
+    float:right; 
+    width: 50%;
+    text-align: right;
+    height:20px;
+}
+#menu-linea2 {
+    position: relative;
+    background-color: #034A7A;
+    padding: 5px;
+    margin: 0px 0px 10px 0px;
+}
+#navegacion {
+    float:left; 
+    width: 50%;
+    
+    position: relative;
+    background-color: #034A7A;
+    color: #0792EF;
+    font-weight: normal;
+}
+#usuario-logado {
+    float:right; 
+    width: 50%;
+    text-align: right;
+    position: relative;
+    background-color: #034A7A;
+    color: gold;
+    font-weight: normal;
+}
+#fondo {
+    position: relative;
+    background-color: #cde2ff;
+    color:navy;
+    padding: 5px;
+    margin: 10px 0px 0px 0px;
+}
+#fondo-izq {
+    float:left; 
+    width: 50%;
+}
+#fondo-der {
+    float:right; 
+    width: 50%;
+    text-align: right;
+    font-weight: bold;
+}
+#izq {
+    float: left;
+    width: 250px;                   /* LW */
+}
+.panel-lateral {
+    background-color: #ece3a5;
+    padding: 5px;
+    margin: 0px 0px 10px 0px;
+}
+#der {
+    float: right;
+    width: 320px;                   /* RW */
+}
+#central {
+    background-color: #dddddd;
+    padding: 5px;
+    margin: 0px 330px 0px 260px;    /* RW + 10      LW + 10 */
+}
+
+
+
+
+
+
+
+.mensajes_error{
+    color:#D20005;
+    font-weight: bold;
+}
+.ui-panelgrid{
+    width:100%;
+    margin:5px 0px 5px 0px;
+}
+/*
+a{
+   font-size: 10px; 
+}
+a:link, a:visited {
+  color: #045491;
+  font-weight : bold;
+  text-decoration: none;
+}
+
+a:link:hover, a:visited:hover  {
+  color: #045491;
+  font-weight : bold;
+  text-decoration : none;
+}
+*/
+body {
+    font-size: 10px;
+    font-family: Verdana, "Verdana CE",  Arial, "Arial CE", "Lucida Grande CE", lucida, "Helvetica CE", sans-serif;
+    margin: 8px;
+    background-color: white;
+}
+
+h1 {
+    font-family: Arial, "Arial CE", "Lucida Grande CE", lucida, "Helvetica CE", sans-serif;
+    border-bottom: 1px solid #AFAFAF; 
+    font-size:  11px;
+    font-weight: bold;
+    margin: 0px;
+    padding: 0px;
+    color: #D20005;
+}
+
+* {
+    font-size: 10px;
+}
+
+#navegacion{
+    font-weight: bold;
+}
+
+
+
