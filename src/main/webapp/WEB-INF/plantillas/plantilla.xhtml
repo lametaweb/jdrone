@@ -1,0 +1,85 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<f:view contentType="text/html">
+	<h:head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<h:outputStylesheet library="css" name="plantilla.css" />
+		<h:outputScript name="js/jquery-2.1.4.js"/>
+		<title>jdrone</title>
+		<meta http-equiv="Cache-Control"
+			content="no-cache, no-store, must-revalidate" />
+		<meta http-equiv="Pragma" content="no-cache" />
+		<meta http-equiv="Expires" content="0" />
+	</h:head>
+
+	<h:body>
+		<div id="logo">
+			<ui:insert name="logo">Logo<br />Logo<br />Logo<br />Logo<br />Logo<br />Logo<br />
+			</ui:insert>
+		</div>
+		<div id="menu-linea1" style="overflow: hidden;">
+			<div id="menu-linea1-izq">
+				<ui:insert name="menu-linea1-izq">Opción 01&#160;&#160;Opción 02&#160;&#160;Opción 03</ui:insert>
+			</div>
+			<div id="menu-linea1-der">
+				<ui:insert name="menu-linea1-der">Opción 01&#160;&#160;Opción 02&#160;&#160;Opción 03</ui:insert>
+			</div>
+		</div>
+		<div id="menu-linea2" style="overflow: hidden;">
+			<div id="navegacion">
+				<ui:insert name="navegacion"> Navegación > Navegación > Navegación > Navegación</ui:insert>
+			</div>
+			<div id="usuario-logado">
+				<ui:insert name="usuario_logado">Usuario logado</ui:insert>
+			</div>
+		</div>
+		<div style="overflow: hidden;">
+			<div id="izq">
+				<div id="izq-arriba" class="panel-lateral">
+					<ui:insert name="izq-arriba">Panel<br />Panel<br />Panel<br />Panel<br />Panel<br />
+					</ui:insert>
+				</div>
+				<div id="izq-abajo" class="panel-lateral">
+					<ui:insert name="izq-abajo">Panel<br />Panel<br />Panel<br />Panel<br />
+					</ui:insert>
+				</div>
+			</div>
+			<div id="der">
+				<div id="der-arriba" class="panel-lateral">
+					<ui:insert name="der-arriba">Opción<br />Opción<br />Opción<br />Opción<br />
+					</ui:insert>
+				</div>
+				<div id="der-abajo" class="panel-lateral">
+					<ui:insert name="der-abajo">Login<br />Identificarse<br />email<br />[      ]<br />contraseña<br />[      ]<br />Entrar<br />Registrarse<br />
+					</ui:insert>
+				</div>
+			</div>
+			<div id="central">
+				<p:panel id="panel-mensajes"
+					style="background-color: #dddddd; border: none;">
+					<h:outputText value="#{flash.mensaje}" style="font-weight: bold;"
+						rendered="#{empty facesContext.messageList}" />
+					<h:messages styleClass="mensajes_error" />
+				</p:panel>
+				<ui:insert name="central">Zona<br />de visualización<br />de pantallas<br />de la aplicación.<br />Es la zona<br />no fija<br />de la plantilla.<br />
+				</ui:insert>
+			</div>
+		</div>
+		<div id="fondo" style="overflow: hidden;">
+			<div id="fondo-izq">
+				<ui:insert name="fondo-izq">Iconos accesibilidad</ui:insert>
+			</div>
+			<div id="fondo-der">
+				<ui:insert name="fondo-der">Contacto&#160;&#160;&#160;&#160;Adicional&#160;&#160;&#160;&#160;Adicional&#160;&#160;&#160;&#160;Adicional&#160;&#160;&#160;&#160;Adicional</ui:insert>
+			</div>
+		</div>
+
+	</h:body>
+</f:view>
+</html>
