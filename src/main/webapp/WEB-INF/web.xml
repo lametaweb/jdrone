@@ -25,4 +25,12 @@ xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/
     <param-name>javax.faces.FACELETS_SKIP_COMMENTS</param-name>
     <param-value>true</param-value>
 </context-param> 
+<context-param>
+	<param-name>primefaces.FONT_AWESOME</param-name>
+	<param-value>true</param-value>
+</context-param>
+<context-param>
+	<param-name>primefaces.THEME</param-name>
+	<param-value>bluesky</param-value>
+</context-param>
 </web-app>

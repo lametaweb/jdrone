@@ -150,6 +150,12 @@
 		    <artifactId>primefaces</artifactId>  
 		    <version>5.2</version>  
 		</dependency>
+		
+		<dependency> 
+			<groupId>org.primefaces.themes</groupId>
+			<artifactId>bluesky</artifactId>
+			<version>1.0.10</version>
+		</dependency>		
 		  	
 		<dependency>
 			<groupId>org.apache.derby</groupId>
