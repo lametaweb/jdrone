@@ -8,9 +8,16 @@
 
 <f:view contentType="text/html">
 	<h:head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+    <f:facet name="last">
+		<!-- estilo -->
 		<h:outputStylesheet library="css" name="plantilla.css" />
-		<h:outputScript name="js/jquery-2.1.4.js"/>
+    </f:facet> 
+		
+		<h:outputScript name="js/jquery-2.1.4.js" />
 		<title>jdrone</title>
 		<meta http-equiv="Cache-Control"
 			content="no-cache, no-store, must-revalidate" />
@@ -19,67 +26,102 @@
 	</h:head>
 
 	<h:body>
-		<div id="logo">
-			<ui:insert name="logo">Logo<br />Logo<br />Logo<br />Logo<br />Logo<br />Logo<br />
-			</ui:insert>
-		</div>
-		<div id="menu-linea1" style="overflow: hidden;">
-			<div id="navegacion">
-				<ui:insert name="navegacion"> Navegación > Navegación > Navegación > Navegación</ui:insert>
-			</div>
-			<div id="usuario-logado">
-				<ui:insert name="usuario_logado">Usuario logado</ui:insert>
-			</div>		
-		</div>
-		<div id="menu-linea2" style="overflow: hidden;">
-			<div id="menu-linea2-izq">
-				<ui:insert name="menu-linea2-izq">Opción 01&#160;&#160;Opción 02&#160;&#160;Opción 03</ui:insert>
-			</div>
-			<div id="menu-linea2-der">
-				<ui:insert name="menu-linea2-der">Opción 01&#160;&#160;Opción 02&#160;&#160;Opción 03</ui:insert>
-			</div>
-		</div>
-		<div style="overflow: hidden;">
-			<div id="izq">
-				<div id="izq-arriba" class="panel-lateral">
-					<ui:insert name="izq-arriba">Panel<br />Panel<br />Panel<br />Panel<br />Panel<br />
-					</ui:insert>
-				</div>
-				<div id="izq-abajo" class="panel-lateral">
-					<ui:insert name="izq-abajo">Panel<br />Panel<br />Panel<br />Panel<br />
-					</ui:insert>
-				</div>
-			</div>
-			<div id="der">
-				<div id="der-arriba" class="panel-lateral">
-					<ui:insert name="der-arriba">Opción<br />Opción<br />Opción<br />Opción<br />
-					</ui:insert>
-				</div>
-				<div id="der-abajo" class="panel-lateral">
-					<ui:insert name="der-abajo">Login<br />Identificarse<br />email<br />[      ]<br />contraseña<br />[      ]<br />Entrar<br />Registrarse<br />
-					</ui:insert>
-				</div>
-			</div>
-			<div id="central">
-				<p:panel id="panel-mensajes"
-					style="background-color: #dddddd; border: none;">
-					<h:outputText value="#{flash.mensaje}" style="font-weight: bold;"
-						rendered="#{empty facesContext.messageList}" />
-					<h:messages styleClass="mensajes_error" />
-				</p:panel>
-				<ui:insert name="central">Zona<br />de visualización<br />de pantallas<br />de la aplicación.<br />Es la zona<br />no fija<br />de la plantilla.<br />
-				</ui:insert>
-			</div>
-		</div>
-		<div id="fondo" style="overflow: hidden;">
-			<div id="fondo-izq">
-				<ui:insert name="fondo-izq">Iconos accesibilidad</ui:insert>
-			</div>
-			<div id="fondo-der">
-				<ui:insert name="fondo-der">Contacto&#160;&#160;&#160;&#160;Adicional&#160;&#160;&#160;&#160;Adicional&#160;&#160;&#160;&#160;Adicional&#160;&#160;&#160;&#160;Adicional</ui:insert>
-			</div>
-		</div>
 
+		<div class="ui-grid ui-grid-responsive">
+			<div class="ui-grid-row">
+				<div id="logo" class="ui-grid-col-12">
+					<ui:insert name="logo">Logo<br />Logo<br />Logo<br />Logo</ui:insert>
+				</div>
+			</div>
+
+
+
+			<div class="ui-grid-row">
+				<div id="navegacion" class="ui-grid-col-6">
+					<ui:insert name="navegacion"> Navegación > Navegación > Navegación > Navegación</ui:insert>
+				</div>
+				<div id="usuario-logado" class="ui-grid-col-6">
+					<ui:insert name="usuario_logado">Usuario logado</ui:insert>
+				</div>
+			</div>
+
+			<div class="ui-grid-row">
+				<div id="menu" class="ui-grid-col-12">
+					<ui:insert name="menu">Opción 01&#160;&#160;Opción 02&#160;&#160;Opción 03</ui:insert>
+				</div>
+			</div>
+
+			<div class="ui-grid-row">
+				<div id="izq" class="ui-grid-col-2">
+					<!-- lateral izquierdo -->
+
+					<div class="ui-grid ui-grid-responsive">
+						<div class="ui-grid-row panel-lateral">
+							<div id="izq-arriba" class="ui-grid-col-12">
+								<ui:insert name="izq-arriba">
+									<br />
+									<br />Arriba<br />Arriba<br />Arriba<br />Arriba<br />Arriba
+								</ui:insert>
+							</div>
+						</div>
+						<div class="ui-grid-row panel-lateral">
+							<div id="izq-abajo" class="ui-grid-col-12">
+								<ui:insert name="izq-abajo">
+									<br />
+									<br />Abajo<br />Abajo<br />Abajo<br />Abajo<br />Abajo
+								</ui:insert>
+							</div>
+						</div>
+					</div>
+
+				</div>
+				<div id="central" class="ui-grid-col-8">
+					<!-- central -->
+
+					<p:panel id="panel-mensajes" rendered="#{not empty facesContext.messageList or flash.mensaje!=null}">
+						<h:outputText value="#{flash.mensaje}" style="font-weight: bold;"
+							rendered="#{empty facesContext.messageList}" />
+						<h:messages styleClass="mensajes_error" />
+					</p:panel>
+
+					<ui:insert name="central">Zona<br />de visualización<br />de pantallas<br />de la aplicación.<br />Es la zona<br />no fija<br />de la plantilla.<br />
+					</ui:insert>
+				</div>
+				<div id="der" class="ui-grid-col-2">
+					<!-- lateral derecho -->
+
+					<div class="ui-grid ui-grid-responsive">
+						<div class="ui-grid-row panel-lateral">
+							<div id="der-arriba" class="ui-grid-col-12">
+								<ui:insert name="der-arriba">
+									<br />
+									<br />Arriba<br />Arriba<br />Arriba<br />Arriba<br />Arriba
+							</ui:insert>
+							</div>
+						</div>
+						<div class="ui-grid-row panel-lateral">
+							<div id="der-abajo" class="ui-grid-col-12">
+								<ui:insert name="der-abajo">
+									<br />
+									<br />Login<br />Identificarse<br />email<br />[      ]<br />contraseña<br />[      ]<br />Entrar<br />Registrarse<br />
+								</ui:insert>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+
+			<div id="fondo" class="ui-grid-row">
+				<div id="fondo-izq" class="ui-grid-col-6">
+					<ui:insert name="fondo-izq">Iconos accesibilidad</ui:insert>
+				</div>
+				<div id="fondo-der" class="ui-grid-col-6">
+					<ui:insert name="fondo-der">Contacto&#160;&#160;&#160;&#160;Adicional&#160;&#160;&#160;&#160;Adicional&#160;&#160;&#160;&#160;Adicional&#160;&#160;&#160;&#160;Adicional</ui:insert>
+				</div>
+			</div>
+
+		</div>
 	</h:body>
 </f:view>
 </html>
