@@ -6,73 +6,8 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:define name="central">
-    	<!-- estilo aplicable a la página -->
-        <f:facet name="last">
-            <h:outputStylesheet library="css" name="estilo.css"/>
-        </f:facet>
-        <!-- acción asociada a la pantalla -->
-        <f:metadata>
-			<f:viewAction action="#{disponibilidadBean.listaEstadoDronesPorFecha()}" onPostback="true"></f:viewAction>
-        </f:metadata> 
-
-		<!-- contenido de zona central -->
-	¡Hola mundo!
-	<br />
-	<h:form>
-		<h:outputText
-			value="Consulta de drones realizando trabajos en una fecha" />
-		<br />
-		<br />
-		<h:messages />
-		<br />
-		<h:outputText
-			value="Introduce la fecha y la hora en el formato indicado:" />
-		<br />
-		<h:outputLabel value="Fecha (dd-mm-aaaa)" for="fecha" />&#160;
-		<h:inputText id="fecha" value="#{disponibilidadBean.fecha}"
-			required="true">
-			<f:convertDateTime pattern="dd-MM-yyyy" />
-		</h:inputText>
-		<br />
-		<h:outputLabel value="Hora (0-23:0-59)" for="hora" />&#160;
-		<h:inputText id="hora" value="#{disponibilidadBean.hora}"
-			required="true">
-			<f:convertDateTime pattern="HH:mm" />
-		</h:inputText>
-		<br />
-		<br />
-		<h:commandButton value="Consultar" />
-	</h:form>
-	<br />
-	<h:dataTable value="#{disponibilidadBean.drones}" var="drone"
-		styleClass="tabla-general" headerClass="tabla-general-cabecera"
-		rowClasses="tabla-general-impar,tabla-general-par">
-
-		<h:column>
-			<!-- column header -->
-			<f:facet name="header">Número de Serie</f:facet>
-			<!-- row record -->
-    				#{drone.numeroDeSerie}
-    			</h:column>
-		<h:column>
-			<f:facet name="header">Modelo</f:facet>
-    				#{drone.modelo}
-    			</h:column>
-		<h:column>
-			<f:facet name="header">Autonomía</f:facet>
-    				#{drone.autonomia}
-    			</h:column>
-		<h:column>
-			<f:facet name="header">Número de Motores</f:facet>
-    				#{drone.numMotores}
-    			</h:column>
-		<h:column>
-			<f:facet name="header">Peso Máximo Despegue</f:facet>
-    				#{drone.pesoMaximoDespegue}
-    			</h:column>
-
-	</h:dataTable>
-			
+		<div id="fondo-inicio">
+		</div>
 	</ui:define>
 	
 	<!-- contenido de zona logo -->
@@ -80,7 +15,11 @@
         <ui:include src="/WEB-INF/paneles/panelLogo.xhtml" />
     </ui:define>
 
-
+	<!-- contenido de zona barra menu -->
+    <ui:define name="menu">
+        <ui:include src="/WEB-INF/paneles/panelMenu.xhtml" />
+    </ui:define>
+    
 	<!-- TODO: contenido de otras zonas... -->
 
 
