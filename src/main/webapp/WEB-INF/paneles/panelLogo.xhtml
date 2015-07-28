@@ -6,22 +6,23 @@
     <f:facet name="last">
 		<!-- estilo -->
     </f:facet>     
-	<div id="caja-logo" style="display:inline-block;">
+	<div id="caja-logo">
     <h:link outcome="/index.xhtml">
         <h:graphicImage id="imagen-logo" value="/resources/imagenes/jdrone.png"
-        				style="position: relative;"
-                        alt="One point management"/>
+                        alt="One point management"/>                       
     </h:link>
-    </div>   
-
+    </div>
+    <div id="caja-tas">
+        <h:graphicImage id="imagen-tas" value="/resources/imagenes/tas.png"
+                        alt="Trabajos Aéreos de Sur"/>     
+	</div>
 	<script>
 		$('#imagen-logo').hover(function(){
 			$(this).animate(
 					{
 						left: '+=10px'
 						}, 200
-					);
-			$(this).animate(
+					).animate(
 					{
 						left: '-=10px'
 						}, 200
