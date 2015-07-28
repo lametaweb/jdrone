@@ -1,52 +1,61 @@
-#logo {
-    position: relative;
+#fondo-inicio{
+	height: 35em;
+	width: 100%;
+	background-image: url("../resources/imagenes/tas-fondo.png");
+    background-repeat: repeat; 
+}
+#caja-logo{
     background-color: #cde2ff;
     color: white;
     padding: 5px;
     margin: 0px 0px 0px 0px;
 }
-#menu-linea1 {
-    position: relative;
-    background-color: #045491;
+#imagen-logo{
+	height: 30%;
+	width: 30%;
+}
+#caja-tas{
+	text-align: right;
+    background-color: #cde2ff;
     color: white;
     padding: 5px;
-    margin: 0px 0px 0px 0px;
+    margin: 0px 0px 0px 0px;	
+}
+#imagen-tas{
+	position: relative;
+	height: 8%;
+	width: 8%;		
+}
+.ui-menubar{
+	height: 1.em;	
+	padding:0em !important;	
+}
+.ui-menuitem{
+	height: 1.8em;
 }
 #navegacion {
-    float:left; 
-    width: 50%;
-    
-    position: relative;
     color: #0792EF;
+    background-color: #e6f0ff;
     font-weight: normal;
+    padding-left: 3px;
+    padding-bottom: 3px;
+    padding-top: 3px;
 }
 #usuario-logado {
-    float:right; 
-    width: 50%;
-    text-align: right;
-    position: relative;
-    color: gold;
+    color: navy;
+    background-color: #e6f0ff;
     font-weight: normal;
+    padding-right: 3px;
+    padding-bottom: 3px;
+    padding-top: 3px;
+    text-align: right;
 }
-#menu-linea2 {
-    position: relative;
-    background-color: #034A7A;
-    padding: 5px;
+
+#menu {
+    background-color: #ffffff;
     margin: 0px 0px 10px 0px;
 }
-#menu-linea2-izq {
-	color: #cde2ff;
-    float:left; 
-    width: 50%;
-    height:20px;
-}
-#menu-linea2-der {
-	color: #cde2ff;
-    float:right; 
-    width: 50%;
-    text-align: right;
-    height:20px;
-}
+
 #fondo {
     position: relative;
     background-color: #cde2ff;
@@ -55,18 +64,13 @@
     margin: 10px 0px 0px 0px;
 }
 #fondo-izq {
-    float:left; 
-    width: 50%;
+    float:left;
 }
 #fondo-der {
-    float:right; 
-    width: 50%;
     text-align: right;
     font-weight: bold;
 }
 #izq {
-    float: left;
-    width: 250px;                   /* LW */
 }
 .panel-lateral {
     background-color: #ece3a5;
@@ -74,13 +78,11 @@
     margin: 0px 0px 10px 0px;
 }
 #der {
-    float: right;
-    width: 320px;                   /* RW */
 }
 #central {
-    background-color: #dddddd;
+    background-color: #e6e6e6;
     padding: 5px;
-    margin: 0px 330px 0px 260px;    /* RW + 10      LW + 10 */
+    margin: 0px 10px 0px 10px;
 }
 
 
@@ -92,6 +94,10 @@
 .mensajes_error{
     color:#D20005;
     font-weight: bold;
+}
+#panel-mensajes{
+	background-color: #e6e6e6;
+	border: none;
 }
 .ui-panelgrid{
     width:100%;
