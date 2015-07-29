@@ -10,13 +10,14 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import com.lametaweb.jdrone.persistencia.Drone;
+import com.lametaweb.jdrone.persistencia.Trabajo;
 
 /**
  * Session Bean implementation class DroneFacade
  */
 @Stateless
 @LocalBean
-public class DroneFacade { 
+public class DroneFacade extends AbstractFacade<Drone> { 
 	
 	@PersistenceContext(unitName = "datosdrones")
     private EntityManager em;
@@ -26,7 +27,12 @@ public class DroneFacade {
      */
     public DroneFacade() {
         // TODO Auto-generated constructor stub
+    	super(Drone.class);
     }
+    
+    protected EntityManager getEntityManager(){
+    	return em;
+    }    
     
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     public List<Drone> obtenEstadoDronesPorFecha(Date fecha){
