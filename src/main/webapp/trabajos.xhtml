@@ -1,0 +1,32 @@
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"                
+                template="/WEB-INF/plantillas/plantilla.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="central">
+		<!-- listado selección trabajos -->
+		<h:form>
+		<p:dataTable>
+		
+		</p:dataTable>
+		</h:form>
+	</ui:define>
+	
+	<!-- contenido de zona logo -->
+    <ui:define name="logo">
+        <ui:include src="/WEB-INF/paneles/panelLogo.xhtml" />
+    </ui:define>
+
+	<!-- contenido de zona barra menu -->
+    <ui:define name="menu">
+        <ui:include src="/WEB-INF/paneles/panelMenu.xhtml" />
+    </ui:define>
+    
+	<!-- TODO: contenido de otras zonas... -->
+
+
+
+
+</ui:composition>
