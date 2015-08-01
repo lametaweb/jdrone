@@ -4,15 +4,67 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
-
+	
+	<f:metadata>
+		<f:viewAction action="#{trabajosBean.actualizaModeloTrabajos()}"></f:viewAction>
+	</f:metadata>
     <ui:define name="central">
 		<!-- listado selección trabajos -->
-		<h:form>
-		<p:dataTable>
-		
+		<h:form id="formulario">
+
+		<p:dataTable id="tabla" var="trabajo" value="#{trabajosBean.trabajos}">
+			<!-- datos -->
+		    <p:column headerText="N. Registro">
+		        <h:outputText value="#{trabajo.numeroDeRegistro}" />
+		    </p:column>
+		 
+		    <p:column headerText="Inicio" priority="3">
+		        <h:outputText value="#{trabajo.fechaHoraInicio}" />
+		    </p:column>
+		 
+		    <p:column headerText="Finalización" priority="2">
+		        <h:outputText value="#{trabajo.fechaHoraFinalizacion}" />
+		    </p:column>
+		    <p:column headerText="Drone" priority="4">
+		        <h:outputText value="#{trabajo.droneAsignado.numeroDeSerie}" />
+		    </p:column>
+		    
+			<!-- acciones -->
+		    <p:column headerText="" priority="1">
+		        <p:commandButton 
+			        action="#{trabajosBean.eliminar(trabajo)}"
+			        update=":formulario:tabla"
+			        icon="ui-icon-trash">
+		        		<p:confirm header="Borrado de trabajo" message="Pulsa Confirmar para confirmar acción" icon="ui-icon-alert" />
+		        </p:commandButton>
+
+				&#160;
+		        <p:button outcome="/trabajo.xhtml" icon="ui-icon-pencil">
+		        	<f:param name="idTrabajo" value="#{trabajo.idTrabajo}"></f:param>
+		        </p:button>
+		    </p:column>	    		    
+		    
 		</p:dataTable>
+		
+	<p:confirmDialog global="true">
+
+			<p:commandButton value="Confirmar" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
+			<p:commandButton value="Cancelar" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
+
+	</p:confirmDialog>		
+      		
 		</h:form>
+	    	
 	</ui:define>
+
+	<!-- 
+	<p:confirmDialog global="true" appendTo="@(body)">
+		<h:form>
+			<p:commandButton value="Confirmar" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
+			<p:commandButton value="Cancelar" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
+		</h:form>
+	</p:confirmDialog>
+ -->
 	
 	<!-- contenido de zona logo -->
     <ui:define name="logo">
@@ -25,8 +77,5 @@
     </ui:define>
     
 	<!-- TODO: contenido de otras zonas... -->
-
-
-
 
 </ui:composition>
