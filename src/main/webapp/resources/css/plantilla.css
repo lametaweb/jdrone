@@ -11,6 +11,7 @@
     margin: 0px 0px 0px 0px;
 }
 #imagen-logo{
+	position: relative;
 	height: 30%;
 	width: 30%;
 }
