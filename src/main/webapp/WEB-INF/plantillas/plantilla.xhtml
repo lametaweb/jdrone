@@ -6,18 +6,16 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
 
-<f:view contentType="text/html">
+<f:view>
 	<h:head>
-
 		<meta charset="utf-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-    <f:facet name="last">
-		<!-- estilo -->
-		<h:outputStylesheet library="css" name="plantilla.css" />
-    </f:facet> 
-		
-		<h:outputScript name="js/jquery-2.1.4.js" />
+	    <f:facet name="last">
+			<!-- estilo -->
+			<h:outputStylesheet library="css" name="plantilla.css" />
+	    </f:facet> 
+	    
 		<title>jdrone</title>
 		<meta http-equiv="Cache-Control"
 			content="no-cache, no-store, must-revalidate" />
@@ -25,7 +23,7 @@
 		<meta http-equiv="Expires" content="0" />
 	</h:head>
 
-	<h:body>
+	<h:body> 
 
 		<div class="ui-grid ui-grid-responsive">
 			<div class="ui-grid-row">
@@ -33,8 +31,6 @@
 					<ui:insert name="logo">Logo<br />Logo<br />Logo<br />Logo</ui:insert>
 				</div>
 			</div>
-
-
 
 			<div class="ui-grid-row">
 				<div id="navegacion" class="ui-grid-col-6">
@@ -54,7 +50,6 @@
 			<div class="ui-grid-row">
 				<div id="izq" class="ui-grid-col-2">
 					<!-- lateral izquierdo -->
-
 					<div class="ui-grid ui-grid-responsive">
 						<div class="ui-grid-row panel-lateral">
 							<div id="izq-arriba" class="ui-grid-col-12">
@@ -73,11 +68,9 @@
 							</div>
 						</div>
 					</div>
-
 				</div>
 				<div id="central" class="ui-grid-col-8">
 					<!-- central -->
-
 					<p:panel id="panel-mensajes" rendered="#{not empty facesContext.messageList or flash.mensaje!=null}">
 						<h:outputText value="#{flash.mensaje}" style="font-weight: bold;"
 							rendered="#{empty facesContext.messageList}" />
@@ -122,6 +115,7 @@
 			</div>
 
 		</div>
+		
 	</h:body>
 </f:view>
 </html>
