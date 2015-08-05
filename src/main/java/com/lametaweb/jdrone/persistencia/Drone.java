@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -34,6 +35,7 @@ public class Drone implements Serializable{
 	private Integer idDrone;
 	
 	@Basic(optional = false)
+	@Column(unique = true)
 	private String numeroDeSerie;
 	
 	private String modelo;
@@ -47,6 +49,37 @@ public class Drone implements Serializable{
 	@OneToMany(mappedBy = "droneAsignado")
 	private List<Trabajo> trabajosAsignados = new ArrayList<Trabajo>();
 	
+	@Override
+	public String toString() {
+		return "Drone [numeroDeSerie=" + numeroDeSerie + "]";
+	}
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((numeroDeSerie == null) ? 0 : numeroDeSerie.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (!(obj instanceof Drone))
+			return false;
+		Drone other = (Drone) obj;
+		if (numeroDeSerie == null) {
+			if (other.numeroDeSerie != null)
+				return false;
+		} else if (!numeroDeSerie.equals(other.numeroDeSerie))
+			return false;
+		return true;
+	}
+
 	public Integer getIdDrone() {
 		return idDrone;
 	}
