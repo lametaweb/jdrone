@@ -1,0 +1,113 @@
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"                
+                template="/WEB-INF/plantillas/plantilla.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+	
+	<f:metadata>
+		<f:viewParam name="idTrabajo" value="#{trabajoBean.trabajo.idTrabajo}"></f:viewParam>
+		<f:viewAction action="#{trabajoBean.actualizaModeloTrabajo()}"></f:viewAction>
+	</f:metadata>
+	
+	
+    <ui:define name="central">
+		<!-- detalles de un trabajo -->
+		<h:form id="formulario">
+		
+			<h:panelGrid id="paneltrabajo" cellpadding="5" columns="2" columnClasses="paneltrabajo1,paneltrabajo2" style="margin-bottom:10px">
+		        <f:facet name="header">
+		            <p:messages id="msgs" />
+		        </f:facet>
+		        <p:outputLabel for="numeroDeRegistro" value="Nº Registro:" />
+        		<p:inputText id="numeroDeRegistro" value="#{trabajoBean.trabajo.numeroDeRegistro}"
+        			required="true" requiredMessage="El campo Número de Registro es obligatorio." 
+        			size="20"/>
+        		<p:outputLabel for="fechaHoraInicio" value="Fecha y hora inicio:" />
+        		<p:calendar id="fechaHoraInicio" value="#{trabajoBean.trabajo.fechaHoraInicio}" pattern="dd/MM/yyyy HH:mm" />
+        		<p:outputLabel for="fechaHoraFinalizacion" value="Fecha y hora inicio:" />
+        		<p:calendar id="fechaHoraFinalizacion" value="#{trabajoBean.trabajo.fechaHoraFinalizacion}" pattern="dd/MM/yyyy HH:mm" />
+        		<p:outputLabel for="velocidad" value="Velocidad:"/>
+        		<p:inputText id="velocidad" value="#{trabajoBean.trabajo.velocidad}" size="6">
+        			<f:convertNumber maxFractionDigits="2"/>
+        		</p:inputText>
+        		<p:outputLabel id="descripcion-label" for="descripcion" value="Descripción:"/>
+        		<p:inputTextarea id="descripcion" rows="6" cols="100" value="#{trabajoBean.trabajo.descripcion}"/>
+				<p:outputLabel for="drone" value="Drone Asignado:"/>
+				<p:selectOneMenu id="drone" value="#{trabajoBean.trabajo.droneAsignado}">
+		            <f:selectItem itemLabel="-- Selecciona --" itemValue="#{null}" />
+		            <f:selectItems itemLabel="#{droneitem.numeroDeSerie}" itemValue="#{droneitem}" var="droneitem" value="#{trabajoBean.drones}" />
+                    <f:converter converterId="droneConverter" />
+                    <f:attribute name="attrdrones" value="#{trabajoBean.drones}" />		            
+		        </p:selectOneMenu>	
+
+				<p:outputLabel for="puntosruta" value="Puntos de Ruta:" />
+				<h:outputText value="" />
+
+				<p:contextMenu for="puntosruta" widgetVar="cMenu">   
+       				<p:menuitem value="Edit Cell" icon="ui-icon-search" onclick="PF('wpuntosruta').showCellEditor(); return false;"/>  
+       				<p:menuitem value="Hide Menu" icon="ui-icon-close" onclick="PF('cMenu').hide()"/>  
+   				</p:contextMenu>
+				<p:dataTable id="puntosruta" var="pto" value="#{trabajoBean.trabajo.puntosDeRuta}"
+					editable="true" editMode="cell" widgetVar="wpuntosruta">
+					<p:ajax event="cellEdit" listener="#{trabajoBean.onCellEdit}"/>
+					<p:column headerText="Latitud" id="latitud">
+          					<p:cellEditor>
+              				<f:facet name="output"><h:outputText value="#{pto.latitud}" /></f:facet>
+              				<f:facet name="input"><p:inputText value="#{pto.latitud}" style="width:100%"/></f:facet>
+          					</p:cellEditor>
+     					</p:column>
+					<p:column headerText="Longitud" id="longitud">
+          					<p:cellEditor>
+              				<f:facet name="output"><h:outputText value="#{pto.longitud}" /></f:facet>
+              				<f:facet name="input"><p:inputText value="#{pto.longitud}" style="width:100%"/></f:facet>
+          					</p:cellEditor>
+     					</p:column>
+					<p:column headerText="Altitud" id="altitud">
+          					<p:cellEditor>
+              				<f:facet name="output"><h:outputText value="#{pto.altitud}" /></f:facet>
+              				<f:facet name="input"><p:inputText value="#{pto.altitud}" style="width:100%"/></f:facet>
+          					</p:cellEditor>
+     					</p:column>      					      					
+				</p:dataTable>
+				<h:outputText value="" />
+
+			</h:panelGrid>
+			<div style="color: red">
+				<p:commandButton value="Cancelar" action="/trabajos?faces-redirect=true" inmediate="true" />
+				<p:commandButton value="Aceptar" action="#{trabajoBean.aceptar}" />
+			</div>
+			#{trabajoBean.trabajo.idTrabajo}<br/>
+			#{trabajoBean.trabajo.numeroDeRegistro}<br/>
+			#{trabajoBean.trabajo.fechaHoraInicio}<br/>
+			#{trabajoBean.trabajo.fechaHoraFinalizacion}<br/>
+			#{trabajoBean.trabajo.velocidad}			
+			#{trabajoBean.trabajo.descripcion}
+			#{trabajoBean.trabajo.droneAsignado.numeroDeSerie}<br/>
+			trabajoBean.trabajo.droneAsignado: #{trabajoBean.trabajo.droneAsignado}<br/>
+			#{trabajoBean.trabajo.puntosDeRuta.size()}<br/>	
+			---------------
+
+		</h:form>
+	<script>
+		$(document).ready(function(){
+			console.log("entrada en funcion");
+			$( "td:has(#formulario\\:descripcion-label)" ).css( {"vertical-align": "top", "padding-top": "10px"} );
+		});
+	</script> 			
+	</ui:define>
+	
+	<!-- contenido de zona logo -->
+    <ui:define name="logo">
+        <ui:include src="/WEB-INF/paneles/panelLogo.xhtml" />
+    </ui:define>
+
+	<!-- contenido de zona barra menu -->
+    <ui:define name="menu">
+        <ui:include src="/WEB-INF/paneles/panelMenu.xhtml" />
+    </ui:define>
+    
+	<!-- TODO: contenido de otras zonas... -->
+	
+
+</ui:composition>
