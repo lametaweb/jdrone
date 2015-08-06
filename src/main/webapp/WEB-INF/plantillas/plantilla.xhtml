@@ -71,10 +71,8 @@
 				</div>
 				<div id="central" class="ui-grid-col-8">
 					<!-- central -->
-					<p:panel id="panel-mensajes" rendered="#{not empty facesContext.messageList or flash.mensaje!=null}">
-						<h:outputText value="#{flash.mensaje}" style="font-weight: bold;"
-							rendered="#{empty facesContext.messageList}" />
-						<h:messages styleClass="mensajes_error" />
+					<p:panel id="panel-mensajes" rendered="#{empty facesContext.messageList and flash.mensaje!=null}">
+						<h:outputText value="#{flash.mensaje}" style="font-weight: bold;" />
 					</p:panel>
 
 					<ui:insert name="central">Zona<br />de visualización<br />de pantallas<br />de la aplicación.<br />Es la zona<br />no fija<br />de la plantilla.<br />
