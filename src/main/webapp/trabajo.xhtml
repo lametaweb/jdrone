@@ -10,90 +10,143 @@
 		<f:viewAction action="#{trabajoBean.actualizaModeloTrabajo()}"></f:viewAction>
 	</f:metadata>
 	
-	
     <ui:define name="central">
 		<!-- detalles de un trabajo -->
 		<h:form id="formulario">
 		
-			<h:panelGrid id="paneltrabajo" cellpadding="5" columns="2" columnClasses="paneltrabajo1,paneltrabajo2" style="margin-bottom:10px">
+			<p:panelGrid id="paneltrabajo" cellpadding="5" columns="2" columnClasses="paneltrabajo1,paneltrabajo2" style="margin-bottom:10px">
 		        <f:facet name="header">
-		            <p:messages id="msgs" />
+		            <p:panel styleClass="fondo-botonera" style="background-color: #E6F0FF !important;">
+						<div style="text-align: right;">
+							<!-- botón cancelar aprovechando las capacidades Ajax del botón Primefaces 
+							<p:commandButton value="Salir" process="@this" action="/trabajos.xhtml?faces-redirect=true" />
+							 -->
+							<!-- la alternativa más sencilla si no tenemos que hacer nada antes de la cancelación -->
+							<p:button value="Salir" outcome="/trabajos.xhtml"/>
+							<!-- usar immediate cuando queramos ejecutar lógica previa a la cancelación 
+							<p:commandButton value="Salir" action="/trabajos.xhtml?faces-redirect=true" immediate="true" />
+							 -->
+							<p:commandButton id="aceptar" value="Aceptar" action="#{trabajoBean.aceptar}" 
+								update="@(:input:not(.notsend)) mensajes"
+								process="@(:input:not(.notsend))"
+								oncomplete="ajustaPosicionEtiquetas();" />
+						</div>		            
+		            </p:panel>	        
+		            <p:messages id="mensajes" showDetail="false" showIcon="false"/>
 		        </f:facet>
 		        <p:outputLabel for="numeroDeRegistro" value="Nº Registro:" />
-        		<p:inputText id="numeroDeRegistro" value="#{trabajoBean.trabajo.numeroDeRegistro}"
-        			required="true" requiredMessage="El campo Número de Registro es obligatorio." 
-        			size="20"/>
-        		<p:outputLabel for="fechaHoraInicio" value="Fecha y hora inicio:" />
-        		<p:calendar id="fechaHoraInicio" value="#{trabajoBean.trabajo.fechaHoraInicio}" pattern="dd/MM/yyyy HH:mm" />
-        		<p:outputLabel for="fechaHoraFinalizacion" value="Fecha y hora inicio:" />
-        		<p:calendar id="fechaHoraFinalizacion" value="#{trabajoBean.trabajo.fechaHoraFinalizacion}" pattern="dd/MM/yyyy HH:mm" />
-        		<p:outputLabel for="velocidad" value="Velocidad:"/>
-        		<p:inputText id="velocidad" value="#{trabajoBean.trabajo.velocidad}" size="6">
-        			<f:convertNumber maxFractionDigits="2"/>
+        		<p:inputText id="numeroDeRegistro" value="#{trabajoBean.trabajo.numeroDeRegistro}" size="20"
+        			disabled="#{not component.attributes['isPosibleEdicionClaveNatural'] and trabajoBean.trabajo.idTrabajo!=null}">
+        			<f:validator binding="#{numeroDeRegistroUnicoValidator}"/>
+        			<f:attribute name="isPosibleEdicionClaveNatural" value="#{false}" />
         		</p:inputText>
+        		<p:outputLabel for="fechaHoraInicio" value="Fecha y hora inicio:" />
+        		<p:calendar id="fechaHoraInicio" value="#{trabajoBean.trabajo.fechaHoraInicio}" pattern="dd/MM/yyyy HH:mm" >
+        			<f:validator binding="#{fechaAnteriorValidator}"/>
+        			<f:attribute name="fechaPosterior" value="#{fechaPosterior}"/>
+        		</p:calendar>
+        		<p:outputLabel for="fechaHoraFinalizacion" value="Fecha y hora finalización:" />
+        		<p:calendar id="fechaHoraFinalizacion" value="#{trabajoBean.trabajo.fechaHoraFinalizacion}" pattern="dd/MM/yyyy HH:mm"
+        			binding="#{fechaPosterior}" />
+        		<p:outputLabel for="velocidad" value="Velocidad:"/>
+        		<p:column>
+	        		<p:inputText id="velocidad" value="#{trabajoBean.trabajo.velocidad}" size="6">
+	        			<f:convertNumber pattern="#0.00" locale="es_ES"/>
+	        		</p:inputText>
+	        		&#160;<h:outputText value="km/h" />
+        		</p:column>
         		<p:outputLabel id="descripcion-label" for="descripcion" value="Descripción:"/>
-        		<p:inputTextarea id="descripcion" rows="6" cols="100" value="#{trabajoBean.trabajo.descripcion}"/>
+        		<p:inputTextarea id="descripcion" rows="6" cols="85" value="#{trabajoBean.trabajo.descripcion}"/>
 				<p:outputLabel for="drone" value="Drone Asignado:"/>
 				<p:selectOneMenu id="drone" value="#{trabajoBean.trabajo.droneAsignado}">
-		            <f:selectItem itemLabel="-- Selecciona --" itemValue="#{null}" />
+		            <f:selectItem itemLabel="-- Selecciona --" itemValue="#{null}" noSelectionOption="true"/>
 		            <f:selectItems itemLabel="#{droneitem.numeroDeSerie}" itemValue="#{droneitem}" var="droneitem" value="#{trabajoBean.drones}" />
-                    <f:converter converterId="droneConverter" />
+                    <f:converter binding="#{droneConverter}" />
                     <f:attribute name="attrdrones" value="#{trabajoBean.drones}" />		            
 		        </p:selectOneMenu>	
+				<p:outputLabel id="panelpuntosruta-label" for="panelpuntosruta" value="Puntos de Ruta:" />
+ 
+			<p:panelGrid id="panelpuntosruta" cellpadding="5" columns="1" style="margin-bottom:10px">
+				
+		        <f:facet name="header">
+		            <p:panelGrid id="panelnuevopto"  cellpadding="0" columns="7" 
+		            	style="background-color: #E6F0FF !important; margin-bottom:10px">
+							<p:outputLabel for="puntoRutaNuevoLatitud" value="Latitud:"/>
+							<p:inputText id="puntoRutaNuevoLatitud" value="#{trabajoBean.puntoRutaNuevo.latitud}" 
+								styleClass="notsend" size="8"/>
+							<p:outputLabel for="puntoRutaNuevoLongitud" value="Longitud:"/>
+							<p:inputText id="puntoRutaNuevoLongitud" value="#{trabajoBean.puntoRutaNuevo.longitud}"
+								styleClass="notsend" size="8"/>
+							<p:outputLabel for="puntoRutaNuevoAltitud" value="Altitud:"/>
+							<p:inputText id="puntoRutaNuevoAltitud" value="#{trabajoBean.puntoRutaNuevo.altitud}"
+								styleClass="notsend" size="8"/>
+							<p:column>
+								<p:commandButton id="añadirdelante" value="Añadir delante" action="#{trabajoBean.nuevoPuntoRuta(true)}" 
+									process="panelnuevopto @this" update="tablapuntosruta panelpuntosruta-msgs panelnuevopto" 
+									widgetVar="añadirdelantew" oncomplete="ajustaPosicionEtiquetas();"
+									style="width:10em; margin-bottom:5px;" disabled="#{trabajoBean.isDisabledBotonesAdicionPto()}"/>
+								<p:commandButton id="añadirdetras" value="Añadir detrás" action="#{trabajoBean.nuevoPuntoRuta(false)}" 
+									process="panelnuevopto @this" update="tablapuntosruta panelpuntosruta-msgs panelnuevopto" 
+									widgetVar="añadirdetrasw" oncomplete="ajustaPosicionEtiquetas();"
+									style="width:10em;"  disabled="#{trabajoBean.isDisabledBotonesAdicionPto()}"/>
+							</p:column>	
+										
+		            </p:panelGrid>		                 
+		            	
+		        </f:facet>
+		        <p:messages id="panelpuntosruta-msgs" showDetail="true" showIcon="false"/>
+		        
+				<p:remoteCommand name="actualizaIndiceComando" process="@this" actionListener="#{trabajoBean.actualizaIndice}"/>
+				<p:dataTable id="tablapuntosruta" var="pto" value="#{trabajoBean.trabajo.puntosDeRuta}"
+					editable="true" widgetVar="wpuntosruta" rowKey="#{pto.idPuntoRuta}">
 
-				<p:outputLabel for="puntosruta" value="Puntos de Ruta:" />
-				<h:outputText value="" />
+					<p:ajax event="rowEdit" listener="#{trabajoBean.onRowEdit}" update="aviso" />
+       				<p:ajax event="rowEditCancel" listener="#{trabajoBean.onRowEditCancel}" update="aviso" />
+       				 
+       				<p:ajax event="rowSelectRadio"
+            			oncomplete="PF('añadirdelantew').enable(); PF('añadirdetrasw').enable(); actualizaIndiceComando([{name:'index', value:$('tr[data-rk=' + PF('wpuntosruta').selection + ']').attr('data-ri')}])" process="@this" />
 
-				<p:contextMenu for="puntosruta" widgetVar="cMenu">   
-       				<p:menuitem value="Edit Cell" icon="ui-icon-search" onclick="PF('wpuntosruta').showCellEditor(); return false;"/>  
-       				<p:menuitem value="Hide Menu" icon="ui-icon-close" onclick="PF('cMenu').hide()"/>  
-   				</p:contextMenu>
-				<p:dataTable id="puntosruta" var="pto" value="#{trabajoBean.trabajo.puntosDeRuta}"
-					editable="true" editMode="cell" widgetVar="wpuntosruta">
-					<p:ajax event="cellEdit" listener="#{trabajoBean.onCellEdit}"/>
+       				<p:column selectionMode="single" style="width:16px;text-align:center"/>	
+	
 					<p:column headerText="Latitud" id="latitud">
-          					<p:cellEditor>
-              				<f:facet name="output"><h:outputText value="#{pto.latitud}" /></f:facet>
-              				<f:facet name="input"><p:inputText value="#{pto.latitud}" style="width:100%"/></f:facet>
-          					</p:cellEditor>
-     					</p:column>
+        				<p:cellEditor>
+            				<f:facet name="output"><h:outputText value="#{pto.latitud}"/></f:facet>
+            				<f:facet name="input"><p:inputText value="#{pto.latitud}" style="width:100%"/></f:facet>
+        				</p:cellEditor>
+     				</p:column>
 					<p:column headerText="Longitud" id="longitud">
-          					<p:cellEditor>
-              				<f:facet name="output"><h:outputText value="#{pto.longitud}" /></f:facet>
-              				<f:facet name="input"><p:inputText value="#{pto.longitud}" style="width:100%"/></f:facet>
-          					</p:cellEditor>
-     					</p:column>
+        				<p:cellEditor>
+            				<f:facet name="output"><h:outputText value="#{pto.longitud}" /></f:facet>
+            				<f:facet name="input"><p:inputText value="#{pto.longitud}" style="width:100%"/></f:facet>
+        				</p:cellEditor>
+     				</p:column>
 					<p:column headerText="Altitud" id="altitud">
-          					<p:cellEditor>
+          				<p:cellEditor>
               				<f:facet name="output"><h:outputText value="#{pto.altitud}" /></f:facet>
               				<f:facet name="input"><p:inputText value="#{pto.altitud}" style="width:100%"/></f:facet>
-          					</p:cellEditor>
-     					</p:column>      					      					
+          				</p:cellEditor>
+     				</p:column>
+			       	<p:column style="width:32px">
+			       		<p:commandButton immediate="true" action="#{trabajoBean.eliminarPuntoRuta(pto)}"
+			       			update="tablapuntosruta" icon="ui-icon-trash" />
+			       	</p:column>	
+					<p:column style="width:32px">
+			           	<p:rowEditor />
+			       	</p:column>			       	     				     					      					
 				</p:dataTable>
-				<h:outputText value="" />
 
-			</h:panelGrid>
-			<div style="color: red">
-				<p:commandButton value="Cancelar" action="/trabajos?faces-redirect=true" inmediate="true" />
-				<p:commandButton value="Aceptar" action="#{trabajoBean.aceptar}" />
-			</div>
-			#{trabajoBean.trabajo.idTrabajo}<br/>
-			#{trabajoBean.trabajo.numeroDeRegistro}<br/>
-			#{trabajoBean.trabajo.fechaHoraInicio}<br/>
-			#{trabajoBean.trabajo.fechaHoraFinalizacion}<br/>
-			#{trabajoBean.trabajo.velocidad}			
-			#{trabajoBean.trabajo.descripcion}
-			#{trabajoBean.trabajo.droneAsignado.numeroDeSerie}<br/>
-			trabajoBean.trabajo.droneAsignado: #{trabajoBean.trabajo.droneAsignado}<br/>
-			#{trabajoBean.trabajo.puntosDeRuta.size()}<br/>	
-			---------------
+				</p:panelGrid>
+			</p:panelGrid>
 
 		</h:form>
 	<script>
-		$(document).ready(function(){
-			console.log("entrada en funcion");
-			$( "td:has(#formulario\\:descripcion-label)" ).css( {"vertical-align": "top", "padding-top": "10px"} );
-		});
+		// selección estilo padre elemento página
+		var ajustaPosicionEtiquetas = function(){
+			$( "td:has(#formulario\\:descripcion-label), td:has(#formulario\\:panelpuntosruta-label)" )
+			.css( {"vertical-align": "top", "padding-top": "10px"} );
+			}
+		$(document).ready(ajustaPosicionEtiquetas);
+
 	</script> 			
 	</ui:define>
 	
