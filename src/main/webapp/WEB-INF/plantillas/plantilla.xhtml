@@ -6,7 +6,7 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
 
-<f:view>
+<f:view locale="es_ES">
 	<h:head>
 		<meta charset="utf-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -23,7 +23,14 @@
 		<meta http-equiv="Expires" content="0" />
 	</h:head>
 
-	<h:body> 
+	<h:body>
+		<p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+		 
+		<p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+		    <p:graphicImage value="/resources/imagenes/espera.gif" />
+		</p:dialog>
+			
+	 <p:growl id="aviso" life="3000"/> 
 
 		<div class="ui-grid ui-grid-responsive">
 			<div class="ui-grid-row">
