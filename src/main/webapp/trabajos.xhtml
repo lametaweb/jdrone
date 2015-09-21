@@ -12,6 +12,15 @@
 		<!-- listado selección trabajos -->
 		<h:form id="formulario">
 
+			<p:panelGrid id="paneltrabajos" cellpadding="5" columns="1" style="margin-bottom:10px">
+		        <f:facet name="header">
+		            <p:panel styleClass="fondo-botonera" style="background-color: #E6F0FF !important;">
+						<div style="text-align: right;">
+			<p:button value="Salir" outcome="/index" />
+			<p:button value="Crear" outcome="/trabajo" />
+						</div>		            
+		            </p:panel>	        
+		        </f:facet>
 		<p:dataTable id="tabla" var="trabajo" value="#{trabajosBean.trabajos}">
 			<!-- datos -->
 		    <p:column headerText="N. Registro">
@@ -33,25 +42,80 @@
 		    <p:column headerText="" priority="1">
 		        <p:commandButton 
 			        action="#{trabajosBean.eliminar(trabajo)}"
-			        update=":formulario:tabla"
+			        update=":formulario:paneltrabajos"
 			        icon="ui-icon-trash">
 		        		<p:confirm header="Borrado de trabajo" message="Pulsa Confirmar para confirmar acción" icon="ui-icon-alert" />
 		        </p:commandButton>
-
 				&#160;
 		        <p:button outcome="/trabajo" icon="ui-icon-pencil">
 		        	<f:param name="idTrabajo" value="#{trabajo.idTrabajo}"></f:param>
 		        </p:button>
+				&#160;
+		        <p:commandButton update=":formulario:trabajoDetail" icon="ui-icon-search" oncomplete="PF('trabajoDialog').show()">
+		        	<f:setPropertyActionListener value="#{trabajo}" target="#{trabajosBean.trabajoSeleccionado}"></f:setPropertyActionListener>
+		        </p:commandButton>
+            		        	        
 		    </p:column>	    		    
 		    
 		</p:dataTable>
-		
-	<p:confirmDialog global="true">
-
+</p:panelGrid>		
+	
+	<!-- diálogo confirmación borrado -->	
+	<p:confirmDialog global="true" styleClass="change-position">
 			<p:commandButton value="Confirmar" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
 			<p:commandButton value="Cancelar" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
-
-	</p:confirmDialog>		
+	</p:confirmDialog>	
+	
+	<!-- diálogo consulta item trabajo -->
+	<p:dialog header="Datos del trabajo" widgetVar="trabajoDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+	        <p:outputPanel id="trabajoDetail" style="text-align:center;">
+	        <p:tabView>
+	        <p:tab title="Datos básicos">
+	            <p:panelGrid style="width:30em;" columns="2" rendered="#{not empty trabajosBean.trabajoSeleccionado}" columnClasses="label,value">
+	                <f:facet name="header">
+	                    <h:outputText value="#{trabajosBean.trabajoSeleccionado.numeroDeRegistro}" /> 
+	                </f:facet>
+	                <h:outputText value="Fecha y hora inicio:" />
+	                <h:outputText value="#{trabajosBean.trabajoSeleccionado.fechaHoraInicio}" />
+	                <h:outputText value="Fecha y hora finalización:" />
+	                <h:outputText value="#{trabajosBean.trabajoSeleccionado.fechaHoraFinalizacion}" />
+	                <h:outputText value="Velocidad:" />
+	                <h:outputText value="#{trabajosBean.trabajoSeleccionado.velocidad}" />
+	                <h:outputText value="Drone:" />
+	                <h:outputText value="#{trabajosBean.trabajoSeleccionado.droneAsignado.numeroDeSerie}" />
+	            </p:panelGrid>
+	        </p:tab>
+	        <p:tab title="Descripción">
+	        	<p:panelGrid  style="width:30em;" columns="2" rendered="#{not empty trabajosBean.trabajoSeleccionado}" >
+	                <f:facet name="header">
+	                    <h:outputText value="#{trabajosBean.trabajoSeleccionado.numeroDeRegistro}" /> 
+	                </f:facet>
+	                <h:outputText value="Descripción:" />
+	                <h:outputText value="#{trabajosBean.trabajoSeleccionado.descripcion}" />
+	            </p:panelGrid>    
+	        </p:tab>
+	        <p:tab title="Ruta">
+	        	<p:panelGrid  style="width:30em;" columns="1" rendered="#{not empty trabajosBean.trabajoSeleccionado}" >
+	                <f:facet name="header">
+	                    <h:outputText value="#{trabajosBean.trabajoSeleccionado.numeroDeRegistro}" /> 
+	                </f:facet>
+					<p:dataTable id="puntosruta" var="pto" value="#{trabajosBean.trabajoSeleccionado.puntosDeRuta}"
+						>
+						<p:column headerText="Latitud" id="latitud">
+	          				<h:outputText value="#{pto.latitud}" />
+	     				</p:column>
+						<p:column headerText="Longitud" id="longitud">
+							<h:outputText value="#{pto.longitud}" />
+	     				</p:column>
+						<p:column headerText="Altitud" id="altitud">
+							<h:outputText value="#{pto.altitud}" />
+	     				</p:column>      					      					
+					</p:dataTable>
+	            </p:panelGrid>    
+	        </p:tab>	        
+	        </p:tabView>
+	        </p:outputPanel>
+	</p:dialog>	
       		
 		</h:form>
 	    	

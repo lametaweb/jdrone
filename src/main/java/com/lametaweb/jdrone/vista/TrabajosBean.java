@@ -17,6 +17,7 @@ public class TrabajosBean implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private List<Trabajo> trabajos;
+	private Trabajo trabajoSeleccionado;
 	@Inject
 	private TrabajoFacade trabajoFacade;
 
@@ -38,4 +39,13 @@ public class TrabajosBean implements Serializable{
 	public List<Trabajo> getTrabajos() {
 		return trabajos;
 	}
+
+	public Trabajo getTrabajoSeleccionado() {
+		return trabajoSeleccionado;
+	}
+
+	public void setTrabajoSeleccionado(Trabajo trabajoSeleccionado) {
+		this.trabajoSeleccionado = trabajoSeleccionado;
+	}
+	
 }
