@@ -1,16 +1,15 @@
-								package com.lametaweb.jdrone.vista.converters;
+package com.lametaweb.jdrone.vista.converters;
 
 import java.util.Iterator;
 import java.util.List;
-
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
-import javax.faces.convert.FacesConverter;
+import javax.inject.Named;
 
 import com.lametaweb.jdrone.persistencia.Drone;
 
-@FacesConverter("droneConverter")
+@Named
 public class DroneConverter  implements Converter{
 
     public DroneConverter(){}
