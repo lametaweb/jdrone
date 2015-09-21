@@ -167,6 +167,17 @@
     </dependencyManagement>
 
 	<dependencies>
+	
+	<dependency>
+		<groupId>org.jboss.spec.javax.el</groupId>
+		<artifactId>jboss-el-api_3.0_spec</artifactId>
+	</dependency>
+
+	<dependency>
+        <groupId>log4j</groupId>
+        <artifactId>log4j</artifactId>
+    </dependency>	
+	
 		<dependency>  
 		    <groupId>org.primefaces</groupId>  
 		    <artifactId>primefaces</artifactId>  
@@ -235,6 +246,13 @@
 			<scope>provided</scope>
 		</dependency>
 		-->
+		
+<dependency>
+        <groupId>javax.servlet</groupId>
+        <artifactId>javax.servlet-api</artifactId>
+        <version>3.0.1</version>
+        <scope>provided</scope>
+</dependency>		
 	</dependencies>
 
 </project>
