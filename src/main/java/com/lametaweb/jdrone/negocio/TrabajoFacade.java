@@ -1,5 +1,7 @@
 package com.lametaweb.jdrone.negocio;
 
+import java.util.List;
+
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -28,5 +30,12 @@ public class TrabajoFacade extends AbstractFacade<Trabajo>{
     protected EntityManager getEntityManager(){
     	return em;
     }
+    
+    // comprobación de restricción de clave natural (unique)
+    public List findByNaturalId(String numeroDeRegistro){
+        return em.createNamedQuery("Trabajo.findByNaturalId").
+                setParameter("numeroDeRegistro", numeroDeRegistro).getResultList();    	
+    }
+    
 
 }
