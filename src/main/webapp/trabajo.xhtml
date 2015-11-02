@@ -14,7 +14,7 @@
 		<!-- detalles de un trabajo -->
 		<h:form id="formulario">
 		
-			<p:panelGrid id="paneltrabajo" cellpadding="5" columns="2" columnClasses="paneltrabajo1,paneltrabajo2" style="margin-bottom:10px">
+			<p:panelGrid id="paneltrabajo" cellpadding="5" columns="2" columnClasses="paneltrabajo1,paneltrabajo2" style="margin-bottom:10px;">
 		        <f:facet name="header">
 		            <p:panel styleClass="fondo-botonera" style="background-color: #E6F0FF !important;">
 						<div style="text-align: right;">
@@ -56,7 +56,7 @@
 	        		&#160;<h:outputText value="km/h" />
         		</p:column>
         		<p:outputLabel id="descripcion-label" for="descripcion" value="Descripción:"/>
-        		<p:inputTextarea id="descripcion" rows="6" cols="85" value="#{trabajoBean.trabajo.descripcion}"/>
+        		<p:inputTextarea id="descripcion" rows="6" cols="50" value="#{trabajoBean.trabajo.descripcion}"/>
 				<p:outputLabel for="drone" value="Drone Asignado:"/>
 				<p:selectOneMenu id="drone" value="#{trabajoBean.trabajo.droneAsignado}">
 		            <f:selectItem itemLabel="-- Selecciona --" itemValue="#{null}" noSelectionOption="true"/>
@@ -69,26 +69,33 @@
 			<p:panelGrid id="panelpuntosruta" cellpadding="5" columns="1" style="margin-bottom:10px">
 				
 		        <f:facet name="header">
-		            <p:panelGrid id="panelnuevopto"  cellpadding="0" columns="7" 
+		            <p:panelGrid id="panelnuevopto" cellpadding="0" columns="4" 
 		            	style="background-color: #E6F0FF !important; margin-bottom:10px">
-							<p:outputLabel for="puntoRutaNuevoLatitud" value="Latitud:"/>
+		            	<p:column>
+							<p:outputLabel for="puntoRutaNuevoLatitud" value="Latitud:"/><br/>
 							<p:inputText id="puntoRutaNuevoLatitud" value="#{trabajoBean.puntoRutaNuevo.latitud}" 
 								styleClass="notsend" size="8"/>
-							<p:outputLabel for="puntoRutaNuevoLongitud" value="Longitud:"/>
+						</p:column>
+						<p:column>
+							<p:outputLabel for="puntoRutaNuevoLongitud" value="Longitud:"/><br/>
 							<p:inputText id="puntoRutaNuevoLongitud" value="#{trabajoBean.puntoRutaNuevo.longitud}"
 								styleClass="notsend" size="8"/>
-							<p:outputLabel for="puntoRutaNuevoAltitud" value="Altitud:"/>
+						</p:column>
+						<p:column>								
+							<p:outputLabel for="puntoRutaNuevoAltitud" value="Altitud:"/><br/>
 							<p:inputText id="puntoRutaNuevoAltitud" value="#{trabajoBean.puntoRutaNuevo.altitud}"
 								styleClass="notsend" size="8"/>
+						</p:column>								
 							<p:column>
 								<p:commandButton id="añadirdelante" value="Añadir delante" action="#{trabajoBean.nuevoPuntoRuta(true)}" 
 									process="panelnuevopto @this" update="tablapuntosruta panelpuntosruta-msgs panelnuevopto" 
 									widgetVar="añadirdelantew" oncomplete="ajustaPosicionEtiquetas();"
-									style="width:10em; margin-bottom:5px;" disabled="#{trabajoBean.isDisabledBotonesAdicionPto()}"/>
+									style="width:8em; margin-bottom:5px;" disabled="#{trabajoBean.isDisabledBotonesAdicionPto()}"/>
+								<br/>
 								<p:commandButton id="añadirdetras" value="Añadir detrás" action="#{trabajoBean.nuevoPuntoRuta(false)}" 
 									process="panelnuevopto @this" update="tablapuntosruta panelpuntosruta-msgs panelnuevopto" 
 									widgetVar="añadirdetrasw" oncomplete="ajustaPosicionEtiquetas();"
-									style="width:10em;"  disabled="#{trabajoBean.isDisabledBotonesAdicionPto()}"/>
+									style="width:8em;"  disabled="#{trabajoBean.isDisabledBotonesAdicionPto()}"/>
 							</p:column>	
 										
 		            </p:panelGrid>		                 
